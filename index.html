@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Escolha um assunto e obtenha um link relacionado ao tópico." />
+  <meta name="keywords" content="tópicos, links, assuntos, seleção, resposta dinâmica" />
+  <meta name="author" content="Seu Nome" />
+  <meta name="robots" content="index, follow" />
+  <title>Escolha um Tópico</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e8f0fe;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    section {
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-container label {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .form-container select,
+    .form-container button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form-container button {
+      background-color: #1976d2;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .form-container button:hover {
+      background-color: #0d47a1;
+    }
+
+    .result-container {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e3f2fd;
+      border: 1px solid #1976d2;
+      border-radius: 5px;
+      text-align: center;
+      display: none;
+    }
+
+    .result-container a {
+      color: #0d47a1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .result-container a:hover {
+      text-decoration: underline;
+    }
+
+    .noticias {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .noticia-item {
+      background-color: #fff;
+      border-left: 4px solid #1976d2;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .noticia-item a {
+      color: #0d47a1;
+      text-decoration: none;
+    }
+
+    .noticia-item a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1976d2;
+      color: white;
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: #ffeb3b;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Escolha um Tópico</h1>
+</header>
+
+<section>
+  <div class="form-container">
+    <h2>Escolha um Tópico de Interesse:</h2>
+    <form id="form" onsubmit="mostrarLink(event)">
+      <label for="topic">Selecione um Tópico:</label>
+      <select name="topic" id="topic" required>
+        <option value="">Selecione...</option>
+        <option value="airbnb">COMEÇAR NO AIRBNB</option>
+        <option value="encurtador">GANHE DINHEIRO COM ENCURTADOR DE LINK</option>
+        <option value="erp">ERP CONFIRA ESSA OPORTUNIDADE</option>
+        <option value="roberto">SEGURO E CONSÓRCIO</option>
+        <option value="gerson">CRÉDITO PESSOAL</option>
+        <option value="VPS">PRECISA DE UMA VPS?</option>
+        <option value="primorico">VIDEO DO PRIMO RICO</option>
+        <option value="sorteio">ESTOU COM SORTE</option>
+        <option value="larissa">Tratamento de calvice</option>
+        <option value="rica">VÍDEOS DO RICA GAMES</option>
+        <option value="rio">CONFIRA CONTEÚDO SOBRE O RIO</option>
+      </select>
+      <button type="submit">Obter Link</button>
+    </form>
+
+    <div id="result-container" class="result-container">
+      <h3>Link Relacionado ao Tópico:</h3>
+      <p id="result"></p>
+
+      <div id="noticias" class="noticias"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><a href="https://shrtlk.biz/85XzH">Política de Privacidade</a> | <a href="https://shrtlk.biz/85XzH">Termos de Serviço</a></p>
+</footer>
+
+<script>
+  const noticiasData = {
+    airbnb: [
+      { title: "Airbnb cresce 40% no Brasil em 2025", link: "#" },
+      { title: "Dicas para novos anfitriões Airbnb", link: "#" }
+    ],
+    encurtador: [
+      { title: "Top 5 encurtadores que pagam em 2025", link: "#" },
+      { title: "Como usar links curtos em redes sociais", link: "#" }
+    ],
+    VPS: [
+      { title: "VPS: Qual escolher em 2025?", link: "#" },
+      { title: "Dicas de segurança para VPS", link: "#" }
+    ],
+    rica: [
+      { title: "Rica Games bate recorde de visualizações", link: "#" }
+    ],
+    rio: [
+      { title: "Turismo no Rio volta a crescer", link: "#" },
+      { title: "Eventos culturais no RJ em destaque", link: "#" }
+    ]
+    // Pode adicionar mais tópicos e notícias aqui
+  };
+
+  function mostrarLink(event) {
+    event.preventDefault();
+    const topic = document.getElementById("topic").value;
+    let link = '';
+
+    switch (topic) {
+      case 'rio': link = 'https://victorxx.github.io/topico03.github/rio.html'; break;
+      case 'encurtador': link = 'https://victorxx.github.io/referenciaencurtadores/'; break;
+      case 'airbnb': link = 'https://victorxx.github.io/airbnbrandom01/'; break;
+      case 'erp': link = 'https://victorxx.github.io/erpgithubrnadom01/'; break;
+      case 'rica': link = 'rica.html'; break;
+      case 'larissa': link = 'https://www.larissasaib.com.br/'; break;
+      case 'VPS': link = 'https://victorxx.github.io/vpsvendagihubrandom01/'; break;
+      case 'primorico': link = 'https://shrtlk.biz/85XzH'; break;
+      case 'sorteio': link = 'https://victorxx.github.io/encaminhargithub/'; break;
+      case 'gerson': link = 'https://geocredibnkvitoria.com/'; break;
+      case 'roberto': link = 'https://victorxx.github.io/VPSVENDA/contatoroberto.html'; break;
+      default: link = '#';
+    }
+
+    document.getElementById("result").innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+    document.getElementById("result-container").style.display = "block";
+
+    // Mostrar notícias relacionadas
+    const noticias = noticiasData[topic] || [];
+    const noticiasDiv = document.getElementById("noticias");
+    if (noticias.length > 0) {
+      noticiasDiv.innerHTML = `<h4>Notícias Relacionadas:</h4>` + noticias.map(n =>
+        `<div class="noticia-item">
+          <a href="${n.link}" target="_blank">${n.title}</a>
+        </div>`
+      ).join('');
+    } else {
+      noticiasDiv.innerHTML = '';
+    }
+  }
+
+  // Centraliza visualmente ao carregar
+  window.onload = () => {
+    const scrollX = (document.body.scrollWidth - window.innerWidth) / 2;
+    const scrollY = (document.body.scrollHeight - window.innerHeight) / 2;
+    window.scrollTo(scrollX, scrollY);
+  };
+</script>
+
+</body>
+</html>
